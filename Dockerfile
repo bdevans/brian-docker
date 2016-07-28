@@ -4,8 +4,7 @@ MAINTAINER Ben Evans <ben.d.evans@gmail.com>
 
 USER root
 
-# libav-tools for matplotlib anim
-# libfreetype6-dev and libxft-dev for matplotlib
+# libfreetype6-dev and libxft-dev for matplotlib libav-tools for matplotlib anim
 RUN apt-get update && \
     apt-get -y upgrade && \
     apt-get install -y --no-install-recommends \
@@ -41,26 +40,15 @@ USER $NB_USER
 
 RUN conda config --add channels brian-team
 RUN conda update --yes conda
-#RUN conda update anaconda
 RUN conda install --quiet --yes conda-build
 
 # Install Python 3 packages
 RUN conda install --quiet --yes \
     'pip=8.1*' \
-    #'numpy=1.11*' \
-    #'scipy=0.17*' \
-    #'sympy=1.0*' \
-    #'pyparsing=2.1*' \
-    #'jinja2=2.8*' \
-    #'setuptools=23.0*' \
-    #'py-cpuinfo=0.2*'
-    #'cython=0.23*' \
-    ###'coverage=4.1*' \
     'nose=1.3*' \
     'sphinx=1.4*' \
     'matplotlib=1.5*' \
     'ipython=4.2*' \
-    #'ipywidgets=4.1*' \
     'brian2' \
     'brian2tools' \
     #&& conda remove --quiet --yes --force qt pyqt \
@@ -89,14 +77,11 @@ RUN conda install --quiet --yes -n python2 -c conda-forge 'ipywidgets=5.2*'
 RUN ln -s $CONDA_DIR/envs/python2/bin/pip $CONDA_DIR/bin/pip2 && \
     ln -s $CONDA_DIR/bin/pip $CONDA_DIR/bin/pip3
 
-#RUN source activate python2 && conda install --quiet --yes ipykernel
-#RUN $CONDA_DIR/envs/python2/bin/pip install ipykernel
 RUN conda install --quiet --yes -n python2 ipykernel
 
 USER root
 
-# Install Python 2 kernel spec globally to avoid permission problems when NB_UID
-# switching at runtime.
+# Install Python 2 kernel spec globally to avoid permission problems
 RUN $CONDA_DIR/envs/python2/bin/python -m ipykernel install
 
 USER $NB_USER
@@ -110,8 +95,6 @@ RUN rm -rf brian2
 RUN chmod -R +x tutorials
 RUN chmod -R +x examples
 
-#COPY jupyter_notebook_config.py /home/$NB_USER/.jupyter/
-#RUN sed -i.bak "s/c.NotebookApp.open_browser = False/c.NotebookApp.open_browser = True/g" /home/$NB_USER/.jupyter/jupyter_notebook_config.py
 RUN chown -R $NB_USER:users /home/$NB_USER/work
 
 # Fix matplotlib 1.5.1 font cache warning
