@@ -24,4 +24,4 @@ TODO
 2. Add plugin for switching environments via "Change kernel" in notebook
     http://stuartmumford.uk/blog/jupyter-notebook-and-conda.html
     #RUN pip install jupyter_environment_kernels
-3. Fix TeX/MathJax for rich display content
+3. <s>Fix TeX/MathJax for rich display content</s> Remove `print` commands from tutorials
