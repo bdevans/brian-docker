@@ -1,0 +1,5 @@
+# Exclude files from Docker image
+.git
+.gitignore
+README.md
+
